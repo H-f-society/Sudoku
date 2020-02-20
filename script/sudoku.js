@@ -2,7 +2,7 @@
 * @Author: H-f-society
 * @Date:   2020-02-20 22:48:46
 * @Last Modified by:   H-f-society
-* @Last Modified time: 2020-02-21 02:56:20
+* @Last Modified time: 2020-02-21 05:36:10
 */
 Array.prototype.CrackSudoku = function() {
 	var grid = this;
@@ -77,6 +77,8 @@ GameConfig.prototype.InitGameMap = function() {
 		this.GameMap[i].fill(0);
 		for(let j=0; j<9; j++) draw.drawRole(i, j, 0);
 	}
+	console.clear();
+	console.log(this.GameMap);
 }
 var Draw = function() {
 	this.drawMap = function(MapSize) {
@@ -131,6 +133,9 @@ $(document).ready(function() {
 	});
 	$("#sub").click(function() {
 		config.crackSudoku();
+	});
+	$("#clear").click(function() {
+		config.InitGameMap();
 	});
 	canvas.onmouseup = function(e) {
 		let x = Math.floor(e.offsetY / (config.MapSize / 9));
