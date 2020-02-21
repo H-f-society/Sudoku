@@ -2,8 +2,19 @@
 * @Author: H-f-society
 * @Date:   2020-02-20 22:48:46
 * @Last Modified by:   H-f-society
-* @Last Modified time: 2020-02-21 05:36:10
+* @Last Modified time: 2020-02-22 00:22:47
 */
+var NUMBER = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+Array.prototype.shuffle = function() { //洗牌算法
+	var input = this;
+	for(let i=input.length-1; i>=0; i--) {
+		var index    = Math.floor(Math.random() * (i + 1));
+		var temp     = input[index];
+		input[index] = input[i];
+		input[i]     = temp;
+	}
+	return input;
+}
 Array.prototype.CrackSudoku = function() {
 	var grid = this;
 	return dfs(grid, 0, 0);
@@ -14,7 +25,10 @@ Array.prototype.CrackSudoku = function() {
 			if(x >= 9) return true;
 		}
 		if(grid[x][y] == 0) {
-			for(let num=1; num<=9; num++) {
+			//新增洗牌算法对1-9打乱再填入，确保每次答案都不一样
+			NUMBER.shuffle();
+			for(let num of NUMBER) {
+			//for(let num=1; num<=9; num++) {
 				if(isTrue(grid, new Array(x, y), num)) {
 					grid[x][y] = num;
 					//draw.drawRole(y, x, num);
@@ -67,7 +81,7 @@ GameConfig.prototype.crackSudoku = function() {
 			}
 		}
 	}
-
+	console.clear();
 	console.log(this.GameMap);
 }
 GameConfig.prototype.InitGameMap = function() {
@@ -77,8 +91,6 @@ GameConfig.prototype.InitGameMap = function() {
 		this.GameMap[i].fill(0);
 		for(let j=0; j<9; j++) draw.drawRole(i, j, 0);
 	}
-	console.clear();
-	console.log(this.GameMap);
 }
 var Draw = function() {
 	this.drawMap = function(MapSize) {
